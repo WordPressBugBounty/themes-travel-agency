@@ -1,10 +1,10 @@
  === Travel Agency ===
 
 Contributors: raratheme
-Requires at least: 4.7
-Requires PHP: 5.6
-Tested up to: 6.5
-Stable tag: 1.5.2
+Requires at least: 6.2
+Requires PHP: 7.4
+Tested up to: 6.7
+Stable tag: 1.5.3
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: one-column, two-columns, right-sidebar, footer-widgets, custom-background, custom-header, custom-menu, custom-logo, featured-images, threaded-comments, rtl-language-support, translation-ready, theme-options, food-and-drink, holiday, entertainment
@@ -88,6 +88,10 @@ License: CC0
     - https://stocksnap.io/license
 
 == Changelog ==
+
+    1.5.3 - Januay 27, 2025
+    * Update: New dashboard has been implemented for better user experience.
+    * Fix: Added compatibility for Single Trips new banner layouts given in WPTE version 6.3.3.
 
     1.5.2 - May 24, 2024
     * Fix: Minor refinements have been done in the dashboard links.

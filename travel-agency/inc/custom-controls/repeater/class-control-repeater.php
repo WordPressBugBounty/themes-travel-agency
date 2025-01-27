@@ -90,7 +90,8 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
     		$media_fields_to_filter = array();
     
     		foreach ( $args['fields'] as $key => $value ) {
-    			$args['fields'][ $key ]['default'] = ( isset( $value['default'] ) ) ? $value['default'] : '';
+    			$args['fields'][ $key ]['default'] = ( isset( $value['default'] ) ) ?: '';
+    			//$args['fields'][ $key ]['label']   = ( isset( $value['label'] ) ) ?: '';
     			$args['fields'][ $key ]['id']      = $key;
     
     			// We check if the filed is an uploaded media ( image , file, video, etc.. ).
@@ -204,14 +205,14 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
                             wp_enqueue_script( 'wp-color-picker' );
                             wp_enqueue_style( 'wp-color-picker' );
     					}elseif( 'font' === $field['type'] ){
-                            wp_enqueue_script( 'all', get_template_directory_uri(). '/js/all.min.js', array(), '5.6.3' );
-                            wp_enqueue_script( 'v4-shims', get_template_directory_uri(). '/js/v4-shims.min.js', array(), '5.6.3' );
+                            wp_enqueue_script( 'all', get_template_directory_uri(). '/js/all.min.js', array(), '6.1.1' );
+                            wp_enqueue_script( 'v4-shims', get_template_directory_uri(). '/js/v4-shims.min.js', array(), '6.1.1' );
     					}
     				}
     			}
     		}
-            wp_enqueue_script( 'travel-agency-repeater', get_template_directory_uri() . '/inc/customizer/repeater/repeater.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ), false, true );
-    		wp_enqueue_style( 'travel-agency-repeater', get_template_directory_uri() . '/inc/customizer/repeater/repeater.css', null );
+            wp_enqueue_script( 'travel-agency-repeater', get_template_directory_uri() . '/inc/custom-controls/repeater/repeater.js', array( 'jquery', 'jquery-ui-core', 'jquery-ui-sortable' ), false, true );
+    		wp_enqueue_style( 'travel-agency-repeater', get_template_directory_uri() . '/inc/custom-controls/repeater/repeater.css', null );
     	}
     
     	/**
@@ -220,7 +221,7 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
     	 *
     	 * @access protected
     	 */
-    	protected function render_content() {
+    	protected function render_content(){
     		?>
     		<label>
     			<?php if ( ! empty( $this->label ) ) : ?>
@@ -242,8 +243,6 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
     		<?php
     
     		$this->repeater_js_template();
-            
-            $this->get_icon_list();
     	}
     
     	/**
@@ -402,7 +401,7 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
     								</figure>
     
     								<div class="actions">
-    									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php _e( 'Remove', 'travel-agency' ); ?></button>
+    									<button type="button" class="button remove-button<# if ( ! field.default ) { #> hidden<# } #>"><?php esc_html_e( 'Remove', 'travel-agency' ); ?></button>
     									<button type="button" class="button upload-button" data-label=" <?php esc_attr_e( 'Add Image', 'travel-agency' ); ?>" data-alt-label="<?php esc_attr_e( 'Change Image', 'travel-agency' ); ?>" >
     										<# if ( field.default ) { #>
     											<?php esc_attr_e( 'Change Image', 'travel-agency' ); ?>
@@ -467,7 +466,7 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
     
     						</div>
     					<# }); #>
-    					<button type="button" class="button-link repeater-row-remove"><?php _e( 'Remove', 'travel-agency' ); ?></button>
+    					<button type="button" class="button-link repeater-row-remove"><?php esc_html_e( 'Remove', 'travel-agency' ); ?></button>
     				</div>
     			</li>
     		</script>
@@ -505,24 +504,5 @@ if( ! class_exists( 'Travel_Agency_Control_Repeater' ) ) {
     			}
     		}
     	}
-        
-        function get_icon_list(){
-    	    $icons = include wp_normalize_path( get_template_directory() . '/inc/fontawesome.php' ); 
-            if( $icons ){ ?>
-            <div class="font-awesome-list-template">
-                <div class="font-awesome-list">
-                    <ul class="font-group">
-                    <?php
-                        foreach( $icons as $font ){
-                            echo '<li data-font="' . esc_attr( $font ) . '"><i class="'. esc_attr( $font ) . '"></i></li>';
-                        }
-                    ?>
-                    </ul>
-                </div>
-            </div>
-            <?php
-            }
-        }
-    
     }
 }

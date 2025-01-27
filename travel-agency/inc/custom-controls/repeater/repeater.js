@@ -106,7 +106,7 @@ wp.customize.controlConstructor.repeater = wp.customize.Control.extend({
 				theNewRow = control.addRow();
 				theNewRow.toggleMinimize();
 				control.initColorPicker();
-				control.initDropdownPages( theNewRow );
+				//control.initDropdownPages( theNewRow );
 			} else {
 				jQuery( control.selector + ' .limit' ).addClass( 'highlight' );
 			}
@@ -861,29 +861,41 @@ jQuery( document ).ready(function($) {
     });
         
     $(document).on( 'click', 'input[type="font"]', function(){
-        if( $(this).siblings( '.font-awesome-list' ).length < 1 ){
-            var $iconlist = $( '.font-awesome-list-template' ).clone();
-            $(this).after( $iconlist.html() );
-            $(this).siblings( '.font-awesome-list' ).fadeIn( 'slow' );
+		var $this = $(this);
+		if( ( ! $this.hasClass('ajax-running') ) && $this.siblings( '.font-awesome-list' ).length < 1 ){			
+			$.ajax({
+				type: "POST",
+				url : ajaxurl,
+				data: {
+					action             : 'travel_agency_get_fontawesome_ajax',
+					tap_customize_nonce: tap_customize.nonce
+				},
+				beforeSend: function(){
+					$this.addClass('ajax-running');
+				},
+				success: function (response) {					
+					var html = '<div class="font-awesome-list">'+response+'</div>';
+					$this.after(html);
+					$this.removeClass('ajax-running');
+				}
+			});
         }
     });
 
     $(document).on( 'click', '.font-group li', function(event){
     	var prefix = $(this).children('svg').attr('data-prefix');
         var icon = $(this).children('svg').attr('data-icon');
-        var val = prefix + ' fa-' + icon;
+        var val = prefix + ' fa-' + icon;        
         $(this).parent().parent().siblings( 'input[type="font"]' ).val(val);
         $(this).parent().parent().siblings( 'input[type="font"]' ).trigger( 'change' );
-        $(this).parent().parent().fadeOut( 'slow', function(){
-            $(this).remove();
-        });
+        $(this).parent().parent().remove();
         event.preventDefault();
     });
     
     $(document).on( 'keyup', 'input[type="font"]', function(){
         var value = $(this).val();
         var matcher = new RegExp( value, 'gi' );
-        $(this).next( '.font-awesome-list' ).children('.font-group').children( 'li' ).show().not(function(){
+        $(this).next('.font-awesome-list').children('.font-group').children( 'li' ).show().not(function(){
             return matcher.test( $(this).find( 'svg' ).attr( 'data-icon' ) );
         }).hide();
     });        

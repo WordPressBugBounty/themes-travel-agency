@@ -116,11 +116,7 @@
     background: #D32F2F;
     color: #fff; }
    
-/** Font awesome list */    
-.font-awesome-list{
-    display:none;
-}
-
+/** Font awesome list */
 .font-group{
     text-align: center;
     height: 350px;

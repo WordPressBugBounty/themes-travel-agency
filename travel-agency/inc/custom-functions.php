@@ -490,7 +490,7 @@ function travel_agency_admin_notice(){
                 <div class="notice-text">
                     <h3><?php esc_html_e( 'Congratulations!', 'travel-agency' ); ?></h3>
                     <p><?php printf( __( '%1$s is now installed and ready to use. Click below to see theme documentation, plugins to install and other details to get started.', 'travel-agency' ), esc_html( $name ) ); ?></p>
-                    <p><a href="<?php echo esc_url( admin_url( 'themes.php?page=travel-agency-getting-started' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Go to the getting started.', 'travel-agency' ); ?></a></p>
+                    <p><a href="<?php echo esc_url( admin_url( 'themes.php?page=travel-agency-dashboard' ) ); ?>" class="button button-primary"><?php esc_html_e( 'Go to the dsahboard.', 'travel-agency' ); ?></a></p>
                     <p class="dismiss-link"><strong><a href="?travel_agency_admin_notice=1&_wpnonce=<?php echo esc_attr( $dismissnonce ); ?>"><?php esc_html_e( 'Dismiss', 'travel-agency' ); ?></a></strong></p>
                 </div>
             </div>
@@ -511,7 +511,7 @@ function travel_agency_update_admin_notice(){
 
     // Bail if the nonce doesn't check out
 
-    if ( isset( $_GET['travel_agency_admin_notice'] ) && $_GET['travel_agency_admin_notice'] = '1' && wp_verify_nonce( $_GET['_wpnonce'], 'travel_agency_admin_notice' ) ) {
+    if ( isset( $_GET['travel_agency_admin_notice'] ) && $_GET['travel_agency_admin_notice'] === '1' && wp_verify_nonce( $_GET['_wpnonce'], 'travel_agency_admin_notice' ) ) {
         update_option( 'travel_agency_admin_notice', true );
     }
 }
@@ -524,3 +524,43 @@ Removal of Tax Description and duplicate page title from the archive-trips
 add_filter( 'wte_trip_archive_description_below_title','__return_false' );
 add_filter( 'wte_trip_archive_description_page_header','__return_false' );
 
+
+if ( ! function_exists( 'travel_agency_get_fontawesome_ajax' ) ) :
+/**
+ * Return an array of all icons.
+ */
+function travel_agency_get_fontawesome_ajax() {
+    // Bail if the nonce doesn't check out
+    if ( ! isset( $_POST['tap_customize_nonce'] ) || ! wp_verify_nonce( sanitize_key( $_POST['tap_customize_nonce'] ), 'tap_customize_nonce' ) ) {
+        wp_die();
+    }
+
+    // Do another nonce check
+    check_ajax_referer( 'tap_customize_nonce', 'tap_customize_nonce' );
+
+    // Bail if user can't edit theme options
+    if ( ! current_user_can( 'edit_theme_options' ) ) {
+        wp_die();
+    }
+
+    // Get all of our fonts
+    $fonts = travel_agency_get_fontawesome_list();
+    
+    ob_start();
+    if( $fonts ){ ?>
+        <ul class="font-group">
+            <?php 
+                foreach( $fonts as $font ){
+                    echo '<li data-font="' . esc_attr( $font ) . '"><i class="' . esc_attr( $font ) . '"></i></li>';                        
+                }
+            ?>
+        </ul>
+        <?php
+    }
+    echo ob_get_clean();
+
+    // Exit
+    wp_die();
+}
+endif;
+add_action( 'wp_ajax_travel_agency_get_fontawesome_ajax', 'travel_agency_get_fontawesome_ajax' );

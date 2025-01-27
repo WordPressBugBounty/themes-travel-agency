@@ -54,12 +54,17 @@ require get_template_directory() . '/inc/metabox.php';
 /**
  * Getting Started
 */
-require get_template_directory() . '/inc/getting-started/getting-started.php';
+require get_template_directory() . '/inc/dashboard/dashboard.php';
 
 /**
  * Plugin Recommendation
 */
 require get_template_directory() . '/inc/tgmpa/recommended-plugins.php';
+
+/**
+ * Fontawesome
+ */
+require get_template_directory() . '/inc/fontawesome.php';
 
 /**
  * Add theme compatibility function for elementor if active

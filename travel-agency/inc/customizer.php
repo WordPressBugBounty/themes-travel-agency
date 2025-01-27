@@ -31,6 +31,12 @@ function travel_agency_customizer_scripts() {
     	'nonce'      => wp_create_nonce('ajax-nonce')
     );
     wp_localize_script( 'travel_agency_customize', 'tadata', $array );
+
+	wp_localize_script( 'travel-agency-repeater', 'tap_customize',
+		array(
+			'nonce' => wp_create_nonce( 'tap_customize_nonce' )
+		)
+	);
 }
 add_action( 'customize_controls_enqueue_scripts', 'travel_agency_customizer_scripts' );
 
