@@ -18,21 +18,28 @@ function travel_agency_add_sidebar_layout_box(){
 }
 add_action( 'add_meta_boxes', 'travel_agency_add_sidebar_layout_box' );
 
-$travel_agency_sidebar_layout = array(
-    'right-sidebar' => array(
-         'value'     => 'right-sidebar',
-    	 'label'     => __( 'Right Sidebar (default)', 'travel-agency' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/right-sidebar.png'         
-     ),
-    'no-sidebar'     => array(
-    	 'value'     => 'no-sidebar',
-    	 'label'     => __( 'No Sidebar', 'travel-agency' ),
-    	 'thumbnail' => get_template_directory_uri() . '/images/no-sidebar.png'
-   	)
-);
+
+if( ! function_exists( 'travel_agency_get_sidebar_layout_data' ) ){
+    function travel_agency_get_sidebar_layout_data(){
+        return array(    
+            'right-sidebar' => array(
+                'value'     => 'right-sidebar',
+                'label'     => __( 'Right Sidebar (default)', 'travel-agency' ),
+                'thumbnail' => get_template_directory_uri() . '/images/right-sidebar.png'         
+            ),
+            'no-sidebar'     => array(
+                'value'     => 'no-sidebar',
+                'label'     => __( 'No Sidebar', 'travel-agency' ),
+                'thumbnail' => get_template_directory_uri() . '/images/no-sidebar.png'
+            )
+        );
+    }
+}
 
 function travel_agency_sidebar_layout_callback(){
-    global $post , $travel_agency_sidebar_layout;
+    global $post;
+    $travel_agency_sidebar_layout = travel_agency_get_sidebar_layout_data();
+
     wp_nonce_field( basename( __FILE__ ), 'travel_agency_nonce' );
 ?>
  
@@ -64,7 +71,7 @@ function travel_agency_sidebar_layout_callback(){
 }
 
 function travel_agency_save_sidebar_layout( $post_id ){
-    global $travel_agency_sidebar_layout;
+    $travel_agency_sidebar_layout = travel_agency_get_sidebar_layout_data();
 
     // Verify the nonce before proceeding.
     if ( !isset( $_POST[ 'travel_agency_nonce' ] ) || !wp_verify_nonce( $_POST[ 'travel_agency_nonce' ], basename( __FILE__ ) ) )

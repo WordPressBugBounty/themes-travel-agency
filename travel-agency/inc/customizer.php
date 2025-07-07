@@ -71,19 +71,24 @@ require get_template_directory() . '/inc/customizer-plugin-recommend/plugin-inst
 
 require get_template_directory() . '/inc/customizer-plugin-recommend/section-notice/class-section-notice.php';
 
-$travel_agency_config_customizer = array(
-	'recommended_plugins' => array( 
-		'travel-agency-companion' => array(
-			'recommended' => true,
-			'description' => sprintf( esc_html__( 'If you want to take full advantage of the features this theme has to offer, please install and activate %s plugin.', 'travel-agency' ), '<strong>Travel Agency Companion</strong>' ),
-		),
-	),
-	'recommended_plugins_title' => esc_html__( 'Recommended Plugin', 'travel-agency' ),
-	'install_button_label'      => esc_html__( 'Install and Activate', 'travel-agency' ),
-	'activate_button_label'     => esc_html__( 'Activate', 'travel-agency' ),
-	'deactivate_button_label'   => esc_html__( 'Deactivate', 'travel-agency' ),
-);
-Travel_Agency_Customizer_Notice::init( apply_filters( 'travel_agency_customizer_notice_array', $travel_agency_config_customizer ) );
+if( ! function_exists( 'travel_agency_customizer_notice_init' ) ) {
+	function travel_agency_customizer_notice_init() {
+		$travel_agency_config_customizer = array(
+			'recommended_plugins' => array( 
+				'travel-agency-companion' => array(
+					'recommended' => true,
+					'description' => sprintf( esc_html__( 'If you want to take full advantage of the features this theme has to offer, please install and activate %s plugin.', 'travel-agency' ), '<strong>Travel Agency Companion</strong>' ),
+				),
+			),
+			'recommended_plugins_title' => esc_html__( 'Recommended Plugin', 'travel-agency' ),
+			'install_button_label'      => esc_html__( 'Install and Activate', 'travel-agency' ),
+			'activate_button_label'     => esc_html__( 'Activate', 'travel-agency' ),
+			'deactivate_button_label'   => esc_html__( 'Deactivate', 'travel-agency' ),
+		);
+		Travel_Agency_Customizer_Notice::init( apply_filters( 'travel_agency_customizer_notice_array', $travel_agency_config_customizer ) );
+	}
+}
+add_action( 'init', 'travel_agency_customizer_notice_init' );
 
 Travel_Agency_Customizer_Section::get_instance();
 

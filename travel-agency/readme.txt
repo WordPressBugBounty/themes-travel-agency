@@ -3,8 +3,8 @@
 Contributors: raratheme
 Requires at least: 6.2
 Requires PHP: 7.4
-Tested up to: 6.7
-Stable tag: 1.5.4
+Tested up to: 6.8
+Stable tag: 1.5.5
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: one-column, two-columns, right-sidebar, footer-widgets, custom-background, custom-header, custom-menu, custom-logo, featured-images, threaded-comments, rtl-language-support, translation-ready, theme-options, food-and-drink, holiday, entertainment
@@ -89,9 +89,13 @@ License: CC0
 
 == Changelog ==
 
+    1.5.5 - July 07, 2025
+    * New Feature: Added options to open header contact in WhatsApp.
+    * Update: Google Fonts Library has been updated.
+
     1.5.4 - March 27, 2025
     * Fix: Added compatibility for Single Trips WPTE version 6.4.1.
-    * Update: Google Fonts Library has been updated
+    * Update: Google Fonts Library has been updated.
 
     1.5.3 - Januay 27, 2025
     * Update: New dashboard has been implemented for better user experience.

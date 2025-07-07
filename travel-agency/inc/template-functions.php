@@ -50,10 +50,12 @@ if( ! function_exists( 'travel_agency_header' ) ) :
  * Header Start
 */
 function travel_agency_header(){     
-    $phone       = get_theme_mod( 'phone', __( '(888) 123-45678', 'travel-agency' ) );
-    $phone_label = get_theme_mod( 'phone_label', __( 'Call us, we are open 24/7', 'travel-agency' ) );
-    $ed_social   = get_theme_mod( 'ed_social_links', true );
-    $ed_search   = get_theme_mod( 'ed_search', true ); 
+    $phone            = get_theme_mod( 'phone', __( '(888) 123-45678', 'travel-agency' ) );
+    $phone_label      = get_theme_mod( 'phone_label', __( 'Call us, we are open 24/7', 'travel-agency' ) );
+    $ed_open_whatsapp = get_theme_mod( 'ed_open_whatsapp', false );
+    $whatsapp_msg_lbl = get_theme_mod( 'whatsapp_msg_lbl', '' );
+    $ed_social        = get_theme_mod( 'ed_social_links', true );
+    $ed_search        = get_theme_mod( 'ed_search', true );
     ?>
     <header id="masthead" class="site-header" itemscope itemtype="https://schema.org/WPHeader">
 		
@@ -73,7 +75,7 @@ function travel_agency_header(){
 				<div class="container">
 					<div class="site-branding" itemscope itemtype="https://schema.org/Organization">
 						<?php 
-                	        if( function_exists( 'has_custom_logo' ) && has_custom_logo() ){
+                            if( function_exists( 'has_custom_logo' ) && has_custom_logo() ){
                                 the_custom_logo();
                             } 
                         ?>
@@ -83,19 +85,28 @@ function travel_agency_header(){
                             <?php else : ?>
                                 <p class="site-title" itemprop="name"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home" itemprop="url"><?php bloginfo( 'name' ); ?></a></p>
                             <?php endif;
-                			$description = get_bloginfo( 'description', 'display' );
-                			if ( $description || is_customize_preview() ) : ?>
-                				<p class="site-description" itemprop="description"><?php echo esc_html( $description ); /* WPCS: xss ok. */ ?></p>
-                			<?php
-                			endif; ?>
+                            $description = get_bloginfo( 'description', 'display' );
+                            if ( $description || is_customize_preview() ) : ?>
+                                <p class="site-description" itemprop="description"><?php echo esc_html( $description ); /* WPCS: xss ok. */ ?></p>
+                            <?php
+                            endif; ?>
                         </div>
-            		</div><!-- .site-branding -->
+                    </div><!-- .site-branding -->
                     
                     <?php if( $phone_label || $phone ){ ?>
                     <div class="right">
                         <?php
-    						if( $phone_label ) echo '<span class="phone-label">' . esc_html( travel_agency_get_phone_label() ) . '</span>';
-                            if( $phone ) echo '<a href="' . esc_url( 'tel:' . preg_replace( '/[^\d+]/', '', $phone ) ) . '" class="tel-link"><span class="phone">' . esc_html( travel_agency_get_header_phone() ) . '</span></a>';
+                            if( $phone_label ) echo '<span class="phone-label">' . esc_html( travel_agency_get_phone_label() ) . '</span>';
+                            $clean_phone = preg_replace( '/[^\d+]/', '', $phone );
+                            // Build WhatsApp URL if enabled
+                            $link = 'tel:' . $clean_phone;
+                            if ( $ed_open_whatsapp ) {
+                                $link = 'https://wa.me/' . $clean_phone;
+                                if ( ! empty( $whatsapp_msg_lbl ) ) {
+                                    $link .= '?text=' . urlencode( $whatsapp_msg_lbl );
+                                }
+                            }
+                            echo '<a href="' . esc_url( $link ) . '" class="tel-link"><span class="phone">' . esc_html( travel_agency_get_header_phone() ) . '</span></a>';
                         ?>
                     </div>
                     <?php } ?>

@@ -90,6 +90,41 @@ function travel_agency_customize_register_header( $wp_customize ) {
         'render_callback' => 'travel_agency_get_phone_label',
     ) );
 
+    $wp_customize->add_setting(
+        'ed_open_whatsapp',
+        array(
+            'default'           => false,
+            'sanitize_callback' => 'travel_agency_sanitize_checkbox',
+        )
+    );
+    
+    $wp_customize->add_control(
+        'ed_open_whatsapp',
+        array(
+            'section'  => 'header_misc_setting',
+            'label'    => __( 'Link to WhatsApp', 'travel-agency' ),
+            'type'     => 'checkbox'
+        )
+    );
+
+    /** Default WhatsApp Message */
+    $wp_customize->add_setting(
+        'whatsapp_msg_lbl',
+        array(
+            'default'           => '',
+            'sanitize_callback' => 'sanitize_text_field',
+        )
+    );
+    
+    $wp_customize->add_control(
+        'whatsapp_msg_lbl',
+        array(
+            'section'  => 'header_misc_setting',
+            'label'    => __( 'Default WhatsApp Message', 'travel-agency' ),
+            'type'     => 'text',
+        )		
+	);
+
     $wp_customize->add_section( 
         'header_layout_setting',
             array(
