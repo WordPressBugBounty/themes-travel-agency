@@ -28,7 +28,7 @@ function travel_agency_customizer_scripts() {
         'home' => get_home_url(),
 		'ajax_url'   => admin_url( 'admin-ajax.php' ),
     	'flushit'    => __( 'Successfully Flushed!','travel-agency' ),
-    	'nonce'      => wp_create_nonce('ajax-nonce')
+    	'nonce'      => wp_create_nonce('travel_agency_flush_fonts_nonce')
     );
     wp_localize_script( 'travel_agency_customize', 'tadata', $array );
 

@@ -89,6 +89,9 @@ License: CC0
 
 == Changelog ==
 
+    1.5.6 - Feb 6, 2026
+    * Update: Added the security measures for Broken Access Control.
+
     1.5.5 - July 07, 2025
     * New Feature: Added options to open header contact in WhatsApp.
     * Update: Google Fonts Library has been updated.
