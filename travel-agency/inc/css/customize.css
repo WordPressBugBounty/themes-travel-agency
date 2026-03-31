@@ -120,3 +120,7 @@ label.row-element.more-detail{
 .customizer-custom .customize-control {
      margin-bottom: 0px; 
 }
+
+#accordion-section-travel_agency_page_view_pro .accordion-section-title::after{
+   content: none;
+}
